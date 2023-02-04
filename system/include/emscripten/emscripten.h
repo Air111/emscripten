@@ -24,6 +24,7 @@
 #include "em_macros.h"
 #include "em_types.h"
 #include "em_js.h"
+#include "promise.h"
 #include "wget.h"
 #include "version.h"
 
@@ -173,6 +174,7 @@ void emscripten_scan_stack(em_scan_func func);
 // is asynchronous the normal dlopen function can't be used in all situations.
 typedef void (*em_dlopen_callback)(void* handle, void* user_data);
 void emscripten_dlopen(const char *filename, int flags, void* user_data, em_dlopen_callback onsuccess, em_arg_callback_func onerror);
+em_promise_t emscripten_dlopen_promise(const char *filename, int flags);
 
 void emscripten_throw_number(double number);
 void emscripten_throw_string(const char *utf8String);

@@ -21,6 +21,7 @@ mergeInto(LibraryManager.library, {
       promiseInfo.resolve = resolve;
     });
     var id = promiseMap.allocate(promiseInfo);
+    {{{ runtimeKeepalivePush() }}};
 #if RUNTIME_DEBUG
     dbg('emscripten_promise_create: ' + id);
 #endif
@@ -73,6 +74,7 @@ mergeInto(LibraryManager.library, {
 #if RUNTIME_DEBUG
       dbg('emscripten promise callback: ' + value);
 #endif
+      {{{ runtimeKeepalivePop() }}};
       var stack = stackSave();
       // Allocate space for the result value and initialize it to NULL.
       var resultPtr = stackAlloc(POINTER_SIZE);
@@ -137,7 +139,7 @@ mergeInto(LibraryManager.library, {
                             makePromiseCallback(onRejected, userData))
     });
 #if RUNTIME_DEBUG
-    dbg('create: ' + newId);
+    dbg('emscripten_promise_then: -> ' + newId);
 #endif
     return newId;
   },
